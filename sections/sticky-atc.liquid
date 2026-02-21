@@ -1,0 +1,50 @@
+{{ 'sticky-atc.css' | asset_url | stylesheet_tag }}
+
+<div id="StickyATC-{{ section.id }}" 
+     class="sticky-atc" 
+     data-product-id="{{ product.id }}"
+     data-section-id="{{ section.id }}">
+  
+  <div class="sticky-atc__container">
+    <div class="sticky-atc__product">
+      <img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.title }}" loading="lazy">
+      <div class="sticky-atc__meta">
+        <span class="sticky-atc__title">{{ product.title }}</span>
+        <span class="sticky-atc__price" id="StickyPrice-{{ section.id }}">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+      </div>
+    </div>
+
+    <div class="sticky-atc__actions">
+      <div class="sticky-atc__variant-label">
+        Selected: <span id="StickyVariantTitle-{{ section.id }}">{{ product.selected_or_first_available_variant.title }}</span>
+      </div>
+      <input type="hidden" name="id" id="StickyVariantInput-{{ section.id }}" value="{{ product.selected_or_first_available_variant.id }}">
+      
+      <button type="button" class="button button--primary sticky-atc__add" id="StickySubmit-{{ section.id }}">
+        <span class="sticky-atc__button-text">Add to Cart</span>
+        <div class="loading-overlay__spinner">
+            <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'sticky-atc.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Sticky Add to Cart",
+  "settings": [
+  ],
+  "presets": [
+    {
+      "name": "Sticky Add to Cart"
+    }
+  ]
+}
+{% endschema %}
